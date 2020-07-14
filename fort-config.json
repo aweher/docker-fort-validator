@@ -1,0 +1,103 @@
+{
+    "tal": "/opt/fort/tals",
+    "local-repository": "/var/cache/fort/repository",
+    "work-offline": false,
+    "shuffle-uris": false,
+    "maximum-certificate-depth": 32,
+    "mode": "server",
+    "server": {
+      "address": "0.0.0.0",
+      "port": "7754",
+      "backlog": 64,
+      "interval": {
+        "validation": 3600,
+        "refresh": 3600,
+        "retry": 600,
+        "expire": 7200
+      }
+    },
+    "slurm": "/opt/fort/",
+    "log": {
+      "enabled": true,
+      "level": "warning",
+      "output": "console",
+      "color-output": false,
+      "file-name-format": "global-url",
+      "facility": "daemon"
+    },
+    "validation-log": {
+      "enabled": false,
+      "level": "warning",
+      "output": "console",
+      "color-output": false,
+      "file-name-format": "global-url",
+      "facility": "daemon",
+      "tag": "Validation"
+    },
+    "http": {
+      "user-agent": "fort/1.3.0",
+      "connect-timeout": 30,
+      "transfer-timeout": 0,
+      "idle-timeout": 15,
+      "ca-path": "/usr/local/ssl/certs"
+    },
+    "rrdp": {
+      "enabled": true,
+      "priority": 50,
+      "retry": {
+        "count": 2,
+        "interval": 5
+      }
+    },
+    "rsync": {
+      "enabled": true,
+      "priority": 50,
+      "strategy": "root-except-ta",
+      "retry": {
+        "count": 2,
+        "interval": 5
+      },
+      "program": "rsync",
+      "arguments-recursive": [
+        "--recursive",
+        "--delete",
+        "--times",
+        "--contimeout=20",
+        "--timeout=15",
+        "$REMOTE",
+        "$LOCAL"
+      ],
+      "arguments-flat": [
+        "--times",
+        "--contimeout=20",
+        "--timeout=15",
+        "--dirs",
+        "$REMOTE",
+        "$LOCAL"
+      ]
+    },
+    "incidences": [
+      {
+        "name": "incid-hashalg-has-params",
+        "action": "ignore"
+      },
+      {
+        "name": "incid-obj-not-der-encoded",
+        "action": "ignore"
+      },
+      {
+        "name": "incid-file-at-mft-not-found",
+        "action": "error"
+      },
+      {
+        "name": "incid-file-at-mft-hash-not-match",
+        "action": "error"
+      }
+    ],
+    "output": {
+      "roa": "/opt/fort/roas.csv",
+      "bgpsec": "/opt/fort/bgpsec.csv"
+    },
+    "asn1-decode-max-stack": 4096,
+    "stale-repository-period": 43200
+  }
